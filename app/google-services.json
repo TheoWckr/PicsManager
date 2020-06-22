@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1092083057449",
+    "firebase_url": "https://picts-manager.firebaseio.com",
+    "project_id": "picts-manager",
+    "storage_bucket": "picts-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092083057449:android:2926a226652aaebe726d38",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092083057449-edvjegng4tgnk2tfepk1v2alei1s8ajt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhqlbKHY87V72F_5Nl-_ig-pluWPQHSJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092083057449-edvjegng4tgnk2tfepk1v2alei1s8ajt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "2"
+}
