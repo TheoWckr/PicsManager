@@ -1,27 +1,23 @@
 package com.example.myapplication
 
+
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
-import android.widget.ImageView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.myapplication.service.AlbumService
-import com.example.myapplication.uploader.Uploader
-import kotlinx.coroutines.awaitAll
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
      val REQUEST_IMAGE_CAPTURE = 1
@@ -54,14 +50,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap?
-            AlbumService.albumCreate("Vacances au sky");
-            if(imageBitmap !== null)
-                Uploader.upload(imageBitmap, "photo");
-            val imageView: ImageView = findViewById(R.id.imageView5)
-            imageView.setImageBitmap(imageBitmap)
-        }
+//        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+//            val imageBitmap = data?.extras?.get("data") as Bitmap?
+//            AlbumService.albumCreate("Vacances au sky");
+//            if(imageBitmap !== null)
+//                Uploader.upload(imageBitmap, "photo");
+//            val imageView: ImageView = findViewById(R.id.imageView5)
+//            imageView.setImageBitmap(imageBitmap)
+
+//        }
+        val baos = ByteArrayOutputStream()
+        val imageBitmap = data?.extras?.get("data") as Bitmap?
+        imageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+
+        val anotherIntent = Intent(this, SavePhotoActivity::class.java)
+        anotherIntent.putExtra("image", data)
+        startActivity(anotherIntent)
+
     }
     @Throws(IOException::class)
     fun createImageFile(): File {
