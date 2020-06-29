@@ -8,15 +8,33 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.Placeholder
+import androidx.databinding.DataBindingUtil
+import com.example.myapplication.helpers.MetaI18n
 import com.google.firebase.auth.FirebaseAuth
+import com.example.myapplication.databinding.ActivityLoginBinding
+import com.example.myapplication.helpers.AllI18n
+import com.example.myapplication.helpers.allI18n
 
 class LoginActivity : AppCompatActivity() {
+    class I18n(
+        override val activityTitle: String,
+        val loginButtonText: String,
+        val emailPlaceholder: String,
+        val passwordPlaceholder: String,
+        val registerButtonText: String,
+        val registerHint: String
+
+    ) : MetaI18n
+
+
     private lateinit var loginButton : Button
     private lateinit var emailField : EditText
     private lateinit var passwordField : EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding.i18n = allI18n.login
         loginButton = findViewById(R.id.login)
         emailField = findViewById(R.id.editTextTextEmailAddress)
         emailField = findViewById(R.id.editTextTextEmailAddress)
