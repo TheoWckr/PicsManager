@@ -3,20 +3,16 @@ package com.example.myapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.constraintlayout.widget.Placeholder
 import androidx.databinding.DataBindingUtil
 import com.example.myapplication.databinding.ActivityRegisterBinding
-import com.example.myapplication.helpers.AllI18n
 import com.example.myapplication.helpers.MetaI18n
 import com.example.myapplication.helpers.allI18n
-import com.google.firebase.auth.FirebaseAuth
+import com.example.myapplication.helpers.auth
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var auth: FirebaseAuth
     private lateinit var registerBtn: Button
     private lateinit var emailField: EditText
     private lateinit var passwordField: EditText
@@ -30,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
         val emailEmptyError: String,
         val passwordEmptyError: String,
         val passwordDontMatchError: String,
-        val authSucess: String,
+        val authSuccess: String,
         val authFailed: String,
         val sigupButtonText: String
 
@@ -45,7 +41,6 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
         binding.i18n = i18n
 
-        auth = FirebaseAuth.getInstance()
         println("firebase instance")
         println(auth.toString())
         registerBtn = findViewById(R.id.registerButton)
@@ -82,7 +77,7 @@ class RegisterActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             val user = auth.currentUser
                             Toast.makeText(
-                                baseContext, i18n.authSucess,
+                                baseContext, i18n.authSuccess,
                                 Toast.LENGTH_SHORT
                             ).show()
                             val intent = Intent(this, MainActivity::class.java)

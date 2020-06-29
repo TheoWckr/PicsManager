@@ -13,7 +13,9 @@ val enI18n = AllI18n(
         emailPlaceholder = "Your email adress",
         passwordPlaceholder = "Your password (min. 6 chars)",
         registerButtonText = "Register",
-        registerHint = "No account ? Register"
+        registerHint = "No account ? Register",
+        authSuccess = "Authentification successful",
+        authFailed = "Authentification failed"
     ),
     register = RegisterActivity.I18n(
         activityTitle = "Sign up",
@@ -23,7 +25,7 @@ val enI18n = AllI18n(
         emailEmptyError = "The email field is empty",
         passwordEmptyError = "The password field is empty (min. 6 chars)",
         passwordDontMatchError = "The passwords doesn't match",
-        authSucess = "Authentification successful",
+        authSuccess = "Authentification successful",
         authFailed = "Authentification failed",
         sigupButtonText = "Sign up"
     )

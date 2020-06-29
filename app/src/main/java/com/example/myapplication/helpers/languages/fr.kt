@@ -13,7 +13,10 @@ val frI18n = AllI18n(
         emailPlaceholder = "Votre adresse mail",
         passwordPlaceholder = "Votre mot de passe (6 caractères minimum)",
         registerButtonText = "S'inscrire",
-        registerHint = "Pas de compte ? Incrivez vous"
+        registerHint = "Pas de compte ? Incrivez vous",
+        authSuccess = "Authentification réussie",
+        authFailed = "L'authentification a échoué"
+
     ),
     register = RegisterActivity.I18n(
         activityTitle = "S'inscrire",
@@ -23,7 +26,7 @@ val frI18n = AllI18n(
         emailEmptyError = "Veuillez renseigner votre adresse mail, le champ est vide",
         passwordEmptyError = "Votre mot de passe doit au moins contenir 6 caractères",
         passwordDontMatchError = "Vos mots de passes ne correspondent pas",
-        authSucess = "Authentification réussie",
+        authSuccess = "Authentification réussie",
         authFailed = "L'authentification a échoué",
         sigupButtonText = "S'inscrire"
     )
