@@ -7,14 +7,17 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.myapplication.helpers.auth
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -24,12 +27,25 @@ class MainActivity : AppCompatActivity() {
     val REQUEST_IMAGE_CAPTURE = 1
     val REQUEST_TAKE_PHOTO = 1
     lateinit var currentPhotoPath: String
+    lateinit var btnLogout : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
+        btnLogout = findViewById(R.id.btnLogout)
+
+        btnLogout.setOnClickListener {
+            auth.signOut()
+            startActivity(Intent(this, LoginActivity::class.java))
+            Toast.makeText(baseContext, "You are signed out", Toast.LENGTH_LONG)
+            finish()
+        }
+        
+        println("this is the current user")
+
+        println(auth.currentUser?.email)
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
