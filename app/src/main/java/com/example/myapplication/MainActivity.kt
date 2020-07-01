@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.myapplication.uploader.Uploader
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -61,6 +62,8 @@ class MainActivity : AppCompatActivity() {
 //        }
         val baos = ByteArrayOutputStream()
         val imageBitmap = data?.extras?.get("data") as Bitmap?
+        if(imageBitmap !== null)
+        Uploader.upload(imageBitmap, "TotoTest");
         imageBitmap?.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
 

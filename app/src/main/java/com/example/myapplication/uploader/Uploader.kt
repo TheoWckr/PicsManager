@@ -5,6 +5,7 @@ import com.example.myapplication.service.AlbumService
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
+import java.nio.ByteBuffer
 
 object Uploader {
     val storage = Firebase.storage
@@ -30,6 +31,17 @@ object Uploader {
         var spaceRef = storageRef.child(AlbumService.currentAlbum+" /" + name)
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+
+        val bmp =  bitmap
+        val size = bmp.rowBytes * bmp.height
+        val b: ByteBuffer = ByteBuffer.allocate(size)
+
+        bmp.copyPixelsToBuffer(b)
+        var intArray = IntArray(size*2);
+        var jenesaispas = Huffman.CodeH(b.array(),intArray);
+
+
+
         val data = baos.toByteArray()
 
         var uploadTask = spaceRef.putBytes(data)
