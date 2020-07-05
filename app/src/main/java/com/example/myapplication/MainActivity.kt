@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -11,7 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.myapplication.service.AlbumService
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.textfield.TextInputEditText
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -20,7 +23,7 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-     val REQUEST_IMAGE_CAPTURE = 1
+    val REQUEST_IMAGE_CAPTURE = 1
     val REQUEST_TAKE_PHOTO = 1
     lateinit var currentPhotoPath: String
     
@@ -46,6 +49,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    fun createAlbum(v:View){
+        // get input text
+        val albumName= this.findViewById<TextInputEditText>(R.id.createAlbum)
+        // save on server
+        if (albumName != null) {
+            AlbumService.albumCreate(albumName.text.toString())
+            println("on est passé par là")
+        }
+    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
