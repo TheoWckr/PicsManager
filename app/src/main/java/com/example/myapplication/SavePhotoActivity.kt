@@ -18,6 +18,7 @@ class SavePhotoActivity : AppCompatActivity() {
         val imageView = findViewById<ImageView>(R.id.pictureResolve).apply {this.setImageBitmap(photoPreview)}
 
 
+
         // Get the Intent that started this activity and extract the string
         //val photo_save = intent.getStringExtra(EXTRA_MESSAGE)
 
