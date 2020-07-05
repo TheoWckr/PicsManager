@@ -13,8 +13,8 @@ class SavePhotoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_save_photo)
         val photoPreview: Bitmap
 
-        val byteArray = intent.getByteArrayExtra("image")
-        photoPreview = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+        val path = intent.getStringExtra("imagePath")
+        photoPreview = BitmapFactory.decodeFile(path)
         val imageView = findViewById<ImageView>(R.id.pictureResolve).apply {this.setImageBitmap(photoPreview)}
 
 

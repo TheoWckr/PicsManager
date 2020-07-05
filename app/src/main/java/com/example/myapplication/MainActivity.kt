@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val anotherIntent = Intent(this, SavePhotoActivity::class.java)
-        anotherIntent.putExtra("image", data)
+        anotherIntent.putExtra("imagePath", currentPhotoPath)
         startActivity(anotherIntent)
 
     }
