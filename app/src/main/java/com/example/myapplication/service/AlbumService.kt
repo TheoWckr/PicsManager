@@ -2,6 +2,8 @@ package com.example.myapplication.service
 
 import android.util.Log
 import androidx.constraintlayout.widget.Constraints.TAG
+import com.example.myapplication.data.LoginRepository
+import com.example.myapplication.helpers.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -17,10 +19,9 @@ object AlbumService {
     val storage = Firebase.storage
 
     fun albumCreate(name: String){
-        //TODO replace owner with user ID
         val album = hashMapOf(
             "name" to name,
-            "owner" to "usertest"
+            "owner" to auth.currentUser?.uid
         )
         // Add a new document with a generated ID
         db.collection("album")
@@ -38,7 +39,7 @@ object AlbumService {
     fun getUserAlbums(receiver : HashMap<String, Any>){
         db.collection("album")
                 //TODO replace with getUser()
-            .whereEqualTo("owner", "usertest")
+            .whereEqualTo("owner", auth.currentUser?.uid)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -51,18 +52,19 @@ object AlbumService {
     }
 
     fun getOthersAlbums(receiver : HashMap<String, Any>){
-        db.collection("album")
-            //TODO replace with getUser()
-            .whereArrayContains("readers", "usertest")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    receiver.putAll(document.data)
+        auth.currentUser?.uid?.let {
+            db.collection("album")
+                .whereArrayContains("readers", it)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        receiver.putAll(document.data)
+                    }
                 }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
+                .addOnFailureListener { exception ->
+                    Log.w(TAG, "Error getting documents: ", exception)
+                }
+        }
     }
 
     fun albumDelete(idAlbum : String){
@@ -82,5 +84,18 @@ object AlbumService {
     fun removeReader(idReader : String, idAlbum : String ){
         val albumUpdated = db.collection("album").document(idAlbum)
         albumUpdated.update("readers", FieldValue.arrayRemove(idReader))
+    }
+
+    fun addPicture(idPicture: String, idAlbum: String ){
+        val albumUpdated = db.collection("album").document(idAlbum)
+        albumUpdated.update("photos", FieldValue.arrayUnion(idPicture))
+    }
+
+
+    fun movePicture(idPicture: String, idCurrentAlbum: String, idNewAlbum : String ){
+        val currentAlbumUpdated = db.collection("album").document(idCurrentAlbum)
+        currentAlbumUpdated.update("photos", FieldValue.arrayRemove(idPicture))
+        val newAlbumUpdated = db.collection("album").document(idNewAlbum)
+        newAlbumUpdated.update("photos", FieldValue.arrayUnion(idPicture))
     }
 }
