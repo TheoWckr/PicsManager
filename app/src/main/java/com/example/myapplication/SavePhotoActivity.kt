@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.compressor.Compressor
 
 
 class SavePhotoActivity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class SavePhotoActivity : AppCompatActivity() {
 
         val path = intent.getStringExtra("imagePath")
         photoPreview = BitmapFactory.decodeFile(path)
-        val imageView = findViewById<ImageView>(R.id.pictureResolve).apply {this.setImageBitmap(photoPreview)}
+        val imageView = findViewById<ImageView>(R.id.pictureResolve).apply {this.setImageBitmap(Compressor.divideSize(photoPreview))}
 
 
 
