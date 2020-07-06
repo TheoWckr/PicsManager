@@ -30,6 +30,9 @@ object Compressor{
         return newImage
     }
 
+    /**
+     * Making average of the datas
+     */
     fun divideSizeAverage (entry : Bitmap) : Bitmap {
         val divisor = 7;
         val newImage = Bitmap.createBitmap( entry.width/divisor, entry.height/divisor,Bitmap.Config.ARGB_8888);

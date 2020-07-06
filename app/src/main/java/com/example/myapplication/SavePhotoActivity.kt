@@ -5,10 +5,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.compressor.Compressor
+import com.example.myapplication.service.AlbumService
+import com.example.myapplication.service.AlbumService.getUserAlbums
 import com.example.myapplication.uploader.Uploader
 import com.google.android.material.textfield.TextInputEditText
 
@@ -20,7 +24,7 @@ class SavePhotoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_save_photo)
         val path = intent.getStringExtra("imagePath")
         photoPreview = BitmapFactory.decodeFile(path)
-        val imageView = findViewById<ImageView>(R.id.pictureResolve).apply {this.setImageBitmap(Compressor.divideSize(photoPreview, 4))}
+        val imageView = findViewById<ImageView>(R.id.pictureResolve).apply {this.setImageBitmap(photoPreview)}
         // Get the Intent that started this activity and extract the string
         //val photo_save = intent.getStringExtra(EXTRA_MESSAGE)
 
@@ -28,6 +32,24 @@ class SavePhotoActivity : AppCompatActivity() {
         //val imageView = findViewById<ImageView>(R.id.pictureResolve).apply {
 //            text = message
 //        }
+        val spinner: Spinner = findViewById(R.id.album_spinner)
+// Create an ArrayAdapter using the string array and a default spinner layout
+        val usersList = ArrayList<String>()
+
+       // var receiver = HashMap<String,Any>()
+        //getUserAlbums(receiver, usersList)
+
+            for (album in AlbumService.albumList) {
+            usersList.add(album.name )
+
+            val  catAdapter =
+                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, usersList)
+            spinner.adapter = catAdapter
+        }
+
+
+
+
     }
 
     fun save (v: View){

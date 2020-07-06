@@ -2,18 +2,20 @@ package com.example.myapplication.service
 
 import android.util.Log
 import androidx.constraintlayout.widget.Constraints.TAG
-import com.example.myapplication.data.LoginRepository
+import androidx.lifecycle.LiveData
+import com.example.myapplication.data.model.Album
 import com.example.myapplication.helpers.auth
 import com.example.myapplication.helpers.db
 import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import java.util.*
 import kotlin.collections.HashMap
 
 object AlbumService {
+    var albumList = ArrayList<Album>()
 
+     fun refreshUserAlbums() {
+        getUserAlbums(albumList)
+    }
         fun albumCreate(name: String){
         val album = hashMapOf(
             "name" to name,
@@ -22,22 +24,30 @@ object AlbumService {
         // Add a new document with a generated ID
         db.collection("album")
             .add(album)
-            .addOnSuccessListener { documentReference ->
+            .addOnSuccessListener { documentReference ->{
                 Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+
+            }
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error adding document", e)
             }
     }
 
-    fun getUserAlbums(receiver : HashMap<String, Any>){
+    fun getUserAlbums(receiver :ArrayList<Album>){
         db.collection("album")
-                //TODO replace with getUser()
             .whereEqualTo("owner", auth.currentUser?.uid)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    receiver.putAll(document.data)
+                    var photos = arrayListOf<String>()
+                    var readers = arrayListOf<String>()
+
+                    var album = Album(document.id, document.data["name"] as String, photos,readers)
+                    receiver.add(album)
+
+                    document.data.keys
+                    //receiver.putAll(document.data)
                 }
             }
             .addOnFailureListener { exception ->
