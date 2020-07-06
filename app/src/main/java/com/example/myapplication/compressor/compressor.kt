@@ -3,12 +3,8 @@ package com.example.myapplication.compressor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.core.graphics.get
-import androidx.core.graphics.red
 import androidx.core.graphics.set
-import androidx.core.graphics.toColor
 import java.io.ByteArrayOutputStream
-import java.nio.Buffer
-import java.nio.ByteBuffer
 import java.nio.MappedByteBuffer
 
 object Compressor{
@@ -22,16 +18,15 @@ object Compressor{
         return runLengthEncoding(text.drop(count).toByteArray(),prev + "$count/$initialChar" )
     }
 
+    /**
+     * return a Bitmap of size height/$divider * width/$divider with $divider² less pixels
+     */
+    fun divideSize (entry : Bitmap, divider : Int) : Bitmap {
+        val newImage = Bitmap.createBitmap( entry.width/divider, entry.height/divider,Bitmap.Config.RGB_565);
 
-    fun divideSize (entry : Bitmap) : Bitmap {
-        val divisor = 7;
-        val newImage = Bitmap.createBitmap( entry.width/divisor, entry.height/divisor,Bitmap.Config.RGB_565);
-
-        for (x in 0..(entry.width/divisor)-1)
-            for(y in 0..(entry.height/divisor)-1)
-                newImage[x,y] = entry[x*divisor, y*divisor];
-        entry.byteCount
-        newImage.byteCount
+        for (x in 0..(entry.width/divider)-1)
+            for(y in 0..(entry.height/divider)-1)
+                newImage[x,y] = entry[x*divider, y*divider];
         return newImage
     }
 

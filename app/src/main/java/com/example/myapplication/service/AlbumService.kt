@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.constraintlayout.widget.Constraints.TAG
 import com.example.myapplication.data.LoginRepository
 import com.example.myapplication.helpers.auth
+import com.example.myapplication.helpers.db
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -13,12 +14,7 @@ import kotlin.collections.HashMap
 
 object AlbumService {
 
-    var currentAlbum = "default";
-
-    val db = Firebase.firestore
-    val storage = Firebase.storage
-
-    fun albumCreate(name: String){
+        fun albumCreate(name: String){
         val album = hashMapOf(
             "name" to name,
             "owner" to auth.currentUser?.uid
@@ -27,8 +23,6 @@ object AlbumService {
         db.collection("album")
             .add(album)
             .addOnSuccessListener { documentReference ->
-                currentAlbum = documentReference.id;
-
                 Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
             }
             .addOnFailureListener { e ->
