@@ -77,26 +77,35 @@ object AlbumService {
 
     fun albumDelete(idAlbum : String){
         val albumToDelete = db.collection("album").document(idAlbum)
+        refreshUserAlbums()
     }
 
     fun albumRename(newName : String, idAlbum : String ) {
         val albumUpdated = db.collection("album").document(idAlbum)
         albumUpdated.update("name", newName)
+        refreshUserAlbums()
+
     }
 
     fun addReader(idReader : String, idAlbum : String ){
         val albumUpdated = db.collection("album").document(idAlbum)
         albumUpdated.update("readers", FieldValue.arrayUnion(idReader))
+        refreshUserAlbums()
+
     }
 
     fun removeReader(idReader : String, idAlbum : String ){
         val albumUpdated = db.collection("album").document(idAlbum)
         albumUpdated.update("readers", FieldValue.arrayRemove(idReader))
+        refreshUserAlbums()
+
     }
 
     fun addPicture(idPicture: String, idAlbum: String ){
         val albumUpdated = db.collection("album").document(idAlbum)
         albumUpdated.update("photos", FieldValue.arrayUnion(idPicture))
+        refreshUserAlbums()
+
     }
 
 
@@ -105,5 +114,6 @@ object AlbumService {
         currentAlbumUpdated.update("photos", FieldValue.arrayRemove(idPicture))
         val newAlbumUpdated = db.collection("album").document(idNewAlbum)
         newAlbumUpdated.update("photos", FieldValue.arrayUnion(idPicture))
+        refreshUserAlbums()
     }
 }
