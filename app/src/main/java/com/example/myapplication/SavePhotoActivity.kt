@@ -5,10 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.compressor.Compressor
 import com.example.myapplication.service.AlbumService
@@ -25,6 +22,13 @@ class SavePhotoActivity : AppCompatActivity() {
         val path = intent.getStringExtra("imagePath")
         photoPreview = BitmapFactory.decodeFile(path)
         val imageView = findViewById<ImageView>(R.id.pictureResolve).apply {this.setImageBitmap(photoPreview)}
+
+        var discardButton = findViewById<Button>(R.id.discard_button)
+
+        discardButton.setOnClickListener {
+            val anotherIntent = Intent(this, MainActivity::class.java)
+            startActivity(anotherIntent)
+        }
         // Get the Intent that started this activity and extract the string
         //val photo_save = intent.getStringExtra(EXTRA_MESSAGE)
 
@@ -50,6 +54,11 @@ class SavePhotoActivity : AppCompatActivity() {
 
 
 
+    }
+
+    fun discard (){
+        val anotherIntent = Intent(this, MainActivity::class.java)
+        startActivity(anotherIntent)
     }
 
     fun save (v: View){

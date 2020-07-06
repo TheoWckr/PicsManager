@@ -34,21 +34,25 @@ object AlbumService {
             }
     }
 
-    fun getUserAlbums(receiver :ArrayList<Album>){
+    fun getUserAlbums( receiver :ArrayList<Album>){
         db.collection("album")
             .whereEqualTo("owner", auth.currentUser?.uid)
             .get()
             .addOnSuccessListener { documents ->
+
+                var newAlbumList = ArrayList<Album>()
                 for (document in documents) {
                     var photos = arrayListOf<String>()
                     var readers = arrayListOf<String>()
 
                     var album = Album(document.id, document.data["name"] as String, photos,readers)
-                    receiver.add(album)
+                    newAlbumList.add(album)
 
                     document.data.keys
                     //receiver.putAll(document.data)
                 }
+                receiver.clear()
+                receiver.addAll(newAlbumList)
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents: ", exception)
