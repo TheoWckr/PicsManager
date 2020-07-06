@@ -14,8 +14,9 @@ import com.example.myapplication.uploader.Uploader
 import com.google.android.material.textfield.TextInputEditText
 
 
-class SavePhotoActivity : AppCompatActivity() {
+class SavePhotoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     lateinit var photoPreview : Bitmap
+    var choosenAlbum = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save_photo)
@@ -37,7 +38,7 @@ class SavePhotoActivity : AppCompatActivity() {
 //            text = message
 //        }
         val spinner: Spinner = findViewById(R.id.album_spinner)
-// Create an ArrayAdapter using the string array and a default spinner layout
+// Create an ArrayAdapter using the st, AdapterView.OnItemSelectedListenerring array and a default spinner layout
         val usersList = ArrayList<String>()
 
        // var receiver = HashMap<String,Any>()
@@ -63,14 +64,24 @@ class SavePhotoActivity : AppCompatActivity() {
 
     fun save (v: View){
         val nameField = findViewById<TextInputEditText>(R.id.name_field)
+        val nameAlbum = findViewById<Spinner>(R.id.album_spinner)
         if (photoPreview !== null )
-           Uploader.upload(Compressor.divideSize(photoPreview, 4), nameField.text.toString(), ::validation )
-    }
+          Uploader.upload(Compressor.divideSize(photoPreview, 4), nameField.text.toString(), ::validation, choosenAlbum )
+        }
+
 
     fun validation(){
         println("Validation")
         Toast.makeText(this, "Image saved", Toast.LENGTH_SHORT).show()
         val anotherIntent = Intent(this, MainActivity::class.java)
         startActivity(anotherIntent)
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+       choosenAlbum=  parent?.getItemAtPosition(position).toString()
     }
 }

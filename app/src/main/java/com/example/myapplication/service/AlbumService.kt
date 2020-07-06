@@ -21,18 +21,16 @@ object AlbumService {
             "name" to name,
             "owner" to auth.currentUser?.uid
         )
-        // Add a new document with a generated ID
-        db.collection("album")
-            .add(album)
-            .addOnSuccessListener { documentReference ->{
-                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-
-            }
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-            }
-    }
+            // Add a new document with a generated ID
+            db.collection("album")
+                .add(album)
+                .addOnSuccessListener { documentReference ->
+                    refreshUserAlbums()
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
+                }
+        }
 
     fun getUserAlbums( receiver :ArrayList<Album>){
         db.collection("album")
