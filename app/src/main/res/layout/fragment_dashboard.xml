@@ -32,7 +32,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ListView
-        android:id="@+id/listAlbums"
+        android:id="@+id/list_album"
         android:layout_width="413dp"
         android:layout_height="646dp"
         android:drawSelectorOnTop="false"

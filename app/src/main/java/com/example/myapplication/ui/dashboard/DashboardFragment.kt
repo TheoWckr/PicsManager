@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.R
@@ -26,22 +25,7 @@ class DashboardFragment : Fragment() {
 
     ): View? {
         // use arrayadapter and define an array
-        val arrayAdapter: ArrayAdapter<*>
-        val users = arrayOf(
-            "Virat Kohli", "Rohit Sharma", "Steve Smith",
-            "Kane Williamson", "Ross Taylor"
-        )
 
-        // access the listView from xml file
-        var mListView = view?.findViewById<ListView>(R.id.listAlbums)
-        arrayAdapter = this.context?.let {
-            ArrayAdapter(
-                it,
-                android.R.layout.simple_list_item_1, users)
-        }!!
-        if (mListView != null) {
-            mListView.adapter = arrayAdapter
-        }
 
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel::class.java)
@@ -51,9 +35,35 @@ class DashboardFragment : Fragment() {
 ////            textView.text = it
 ////        })
 
+
+
+        // access the listView from xml file
+
         val button = root.findViewById<Button>(R.id.createAlbum)
         button.setOnClickListener { createAlbum() }
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        val arrayAdapter: ArrayAdapter<*>
+        val users = arrayOf(
+            "Virat Kohli", "Rohit Sharma", "Steve Smith",
+            "Kane Williamson", "Ross Taylor"
+        )
+
+        var mListView = view.findViewById<ListView>(R.id.list_album)
+        arrayAdapter = this.context?.let {
+            ArrayAdapter(
+                it,
+                android.R.layout.simple_list_item_1, users)
+        }!!
+        if (mListView != null) {
+            mListView.adapter = arrayAdapter
+        }
+
     }
 
     private fun createAlbum(){
