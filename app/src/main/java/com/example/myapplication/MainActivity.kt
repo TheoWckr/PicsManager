@@ -9,6 +9,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
+
         btnLogout = findViewById(R.id.btnLogout)
 
         btnLogout.setOnClickListener {
@@ -55,6 +57,11 @@ class MainActivity : AppCompatActivity() {
         println("this is the current user")
 
         println(auth.currentUser?.email)
+
+        if (auth.currentUser != null) {
+            val btnLoggedAs = findViewById<TextView>(R.id.loggedAs)
+            btnLoggedAs.text = "Logged as " + auth.currentUser?.email
+        }
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each

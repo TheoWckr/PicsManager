@@ -41,7 +41,7 @@ class DashboardFragment : Fragment() {
         // save on server
         if (albumName != null) {
             AlbumService.albumCreate(albumName.text.toString())
-            println("on est passé par là")
+//            println("on est passé par là")
         }
     }
 }
