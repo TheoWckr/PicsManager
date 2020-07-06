@@ -33,13 +33,14 @@
 
     <ListView
         android:id="@+id/list_album"
-        android:layout_width="413dp"
-        android:layout_height="646dp"
+        android:layout_width="398dp"
+        android:layout_height="615dp"
+        android:layout_marginBottom="16dp"
         android:drawSelectorOnTop="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        app:layout_constraintHorizontal_bias="0.692"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

@@ -49,16 +49,15 @@ class DashboardFragment : Fragment() {
 
 
         val arrayAdapter: ArrayAdapter<*>
-        val users = arrayOf(
-            "Virat Kohli", "Rohit Sharma", "Steve Smith",
-            "Kane Williamson", "Ross Taylor"
+        val userAlbum = arrayOf(
+            AlbumService.albumList
         )
 
         var mListView = view.findViewById<ListView>(R.id.list_album)
         arrayAdapter = this.context?.let {
             ArrayAdapter(
                 it,
-                android.R.layout.simple_list_item_1, users)
+                android.R.layout.simple_list_item_1, userAlbum)
         }!!
         if (mListView != null) {
             mListView.adapter = arrayAdapter

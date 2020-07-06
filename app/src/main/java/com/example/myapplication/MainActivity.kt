@@ -44,15 +44,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-
-        btnLogout = findViewById(R.id.btnLogout)
-
-        btnLogout.setOnClickListener {
-            auth.signOut()
-            startActivity(Intent(this, LoginActivity::class.java))
-            Toast.makeText(baseContext, "You are signed out", Toast.LENGTH_LONG)
-            finish()
-        }
+// // old logout button
+//        btnLogout = findViewById(R.id.btnLogout)
+//
+//        btnLogout.setOnClickListener {
+//            auth.signOut()
+//            startActivity(Intent(this, LoginActivity::class.java))
+//            Toast.makeText(baseContext, "You are signed out", Toast.LENGTH_LONG)
+//            finish()
+//        }
 
         println("this is the current user")
 
