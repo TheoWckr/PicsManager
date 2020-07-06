@@ -2,6 +2,7 @@ package com.example.myapplication.helpers
 
 import android.app.Activity
 import com.example.myapplication.LoginActivity
+import com.example.myapplication.MainActivity
 import com.example.myapplication.RegisterActivity
 import com.example.myapplication.helpers.languages.enI18n
 import com.example.myapplication.helpers.languages.frI18n
@@ -14,7 +15,8 @@ import java.util.*
 class AllI18n(
     val langage : AppLanguage,
     val login : LoginActivity.I18n,
-    val register: RegisterActivity.I18n
+    val register: RegisterActivity.I18n,
+    val main : MainActivity.I18n
 )
 
 /**

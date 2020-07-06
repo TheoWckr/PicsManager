@@ -16,6 +16,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.myapplication.helpers.MetaI18n
 import com.example.myapplication.helpers.auth
 import com.example.myapplication.service.AlbumService
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -31,6 +32,11 @@ class MainActivity : AppCompatActivity() {
     val REQUEST_TAKE_PHOTO = 1
     lateinit var currentPhotoPath: String
     lateinit var btnLogout : Button
+
+    class I18n(
+        override val activityTitle: String,
+        val takePicture: String
+    ) : MetaI18n
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +100,6 @@ class MainActivity : AppCompatActivity() {
         // save on server
         if (albumName != null) {
             AlbumService.albumCreate(albumName.text.toString())
-            println("on est passé par là")
         }
     }
 
