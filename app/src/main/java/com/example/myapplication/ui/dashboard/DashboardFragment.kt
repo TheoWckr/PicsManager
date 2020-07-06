@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.R
 import com.example.myapplication.service.AlbumService
 import com.google.android.material.textfield.TextInputEditText
+
 
 class DashboardFragment : Fragment() {
 
@@ -21,7 +23,26 @@ class DashboardFragment : Fragment() {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
+
     ): View? {
+        // use arrayadapter and define an array
+        val arrayAdapter: ArrayAdapter<*>
+        val users = arrayOf(
+            "Virat Kohli", "Rohit Sharma", "Steve Smith",
+            "Kane Williamson", "Ross Taylor"
+        )
+
+        // access the listView from xml file
+        var mListView = view?.findViewById<ListView>(R.id.listAlbums)
+        arrayAdapter = this.context?.let {
+            ArrayAdapter(
+                it,
+                android.R.layout.simple_list_item_1, users)
+        }!!
+        if (mListView != null) {
+            mListView.adapter = arrayAdapter
+        }
+
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
@@ -41,7 +62,8 @@ class DashboardFragment : Fragment() {
         // save on server
         if (albumName != null) {
             AlbumService.albumCreate(albumName.text.toString())
-            println("on est passé par là")
+//            println("on est passé par là")
         }
     }
+
 }

@@ -44,9 +44,18 @@
         android:text="Logout"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nav_host_fragment"
         app:layout_constraintVertical_bias="0.617" />
+
+    <TextView
+        android:id="@+id/loggedAs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Not logged in"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
