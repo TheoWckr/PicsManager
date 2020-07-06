@@ -45,7 +45,7 @@ class SavePhotoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         //getUserAlbums(receiver, usersList)
 
             for (album in AlbumService.albumList) {
-            usersList.add(album.name )
+                    usersList.add(album.name )
 
             val  catAdapter =
                 ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, usersList)

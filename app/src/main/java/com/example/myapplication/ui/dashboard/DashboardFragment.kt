@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.R
 import com.example.myapplication.service.AlbumService
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 
 class DashboardFragment : Fragment() {
@@ -25,7 +26,24 @@ class DashboardFragment : Fragment() {
 
     ): View? {
         // use arrayadapter and define an array
+        val userAlbums = ArrayList<String>()
+        for (album in AlbumService.albumList) {
+            userAlbums.add(album.name )}
 
+        val arrayAdapter: ArrayAdapter<*>
+        val userAlbum = arrayOf(
+            userAlbums
+        )
+
+        var mListView = view?.findViewById<ListView>(R.id.list_album)
+        arrayAdapter = this.context?.let {
+            ArrayAdapter(
+                it,
+                android.R.layout.simple_list_item_1, userAlbum)
+        }!!
+        if (mListView != null) {
+            mListView.adapter = arrayAdapter
+        }
 
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel::class.java)
@@ -40,7 +58,7 @@ class DashboardFragment : Fragment() {
         // access the listView from xml file
 
         val button = root.findViewById<Button>(R.id.createAlbum)
-        button.setOnClickListener { createAlbum() }
+        button.setOnClickListener { createAlbum }
         return root
     }
 
@@ -48,24 +66,9 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val arrayAdapter: ArrayAdapter<*>
-        val userAlbum = arrayOf(
-            AlbumService.albumList
-        )
 
-        var mListView = view.findViewById<ListView>(R.id.list_album)
-        arrayAdapter = this.context?.let {
-            ArrayAdapter(
-                it,
-                android.R.layout.simple_list_item_1, userAlbum)
-        }!!
-        if (mListView != null) {
-            mListView.adapter = arrayAdapter
-        }
 
-    }
-
-    private fun createAlbum(){
+    fun createAlbum(){
         // get input text
         val albumName= activity?.findViewById<TextInputEditText>(R.id.albumNameInput)
         // save on server
@@ -75,4 +78,4 @@ class DashboardFragment : Fragment() {
         }
     }
 
-}
+}}
