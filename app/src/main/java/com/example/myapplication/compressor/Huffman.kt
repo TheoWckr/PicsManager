@@ -12,10 +12,6 @@ object Huffman {
             p1 = liste.ExtraireMin()
             p2 = liste.ExtraireMin()
             liste.Ajouter(Noeud(p1.a, p2.a), p1.freq + p2.freq)
-            if(taille ===150000)
-              println(150000)
-            if(taille ===200000)
-                println(taille)
         }
         p1 = liste.ExtraireMin()
         // on finalise le code et faisant pointer les feuilles à la racine...
