@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.GalleryActivity
@@ -49,13 +50,15 @@ class DashboardFragment : Fragment() {
     }
 
     fun createAlbum(){
-        // get input text
-        val albumName= activity?.findViewById<TextInputEditText>(R.id.albumNameInput)
-        // save on server
-        if (albumName != null) {
-            AlbumService.albumCreate(albumName.text.toString())
-//            println("on est passé par là")
+        val albumName= activity?.findViewById<TextInputEditText>(R.id.albumNameInput)?.text.toString()
+
+        if (albumName.isNotEmpty()) {
+            AlbumService.albumCreate(albumName)
+            Toast.makeText(activity?.applicationContext,"Album created", Toast.LENGTH_SHORT).show()
+            activity?.findViewById<TextInputEditText>(R.id.albumNameInput)?.clearFocus()
+            activity?.findViewById<TextInputEditText>(R.id.albumNameInput)?.text?.clear()
         }
+        else Toast.makeText(activity?.baseContext,"Please enter a name for the album", Toast.LENGTH_SHORT).show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
