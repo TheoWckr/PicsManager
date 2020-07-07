@@ -22,7 +22,9 @@ class SavePhotoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         setContentView(R.layout.activity_save_photo)
         val path = intent.getStringExtra("imagePath")
         photoPreview = BitmapFactory.decodeFile(path)
+
         val imageView = findViewById<ImageView>(R.id.pictureResolve).apply {this.setImageBitmap(photoPreview)}
+        imageView.rotation = 90F 
 
         var discardButton = findViewById<Button>(R.id.discard_button)
 

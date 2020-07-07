@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/discard_button"
         app:layout_constraintVertical_bias="0.396"
-        tools:srcCompat="@tools:sample/avatars" />
+        />
 
     <Button
         android:id="@+id/discard_button"
