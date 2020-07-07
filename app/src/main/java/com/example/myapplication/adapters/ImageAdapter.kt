@@ -42,6 +42,8 @@ class ImageAdapter(private val myDataset: Array<String>) :
             val storageReference = Firebase.storage.reference
             val pictureRef=  storageReference.child(photoId.removePrefix("/"))
 // ImageView in your Activity
+            holder.imageView.rotation = 90F
+
 
 // Download directly from StorageReference using Glide
 // (See MyAppGlideModule for Loader registration)
