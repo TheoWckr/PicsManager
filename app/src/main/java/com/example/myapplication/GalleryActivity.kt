@@ -1,7 +1,11 @@
 package com.example.myapplication
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,13 +23,19 @@ class GalleryActivity: AppCompatActivity() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
 
+    private lateinit var idAlbum: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gallery)
 
-        val albumName = intent.getStringExtra("albumName")
+        val button = findViewById<Button>(R.id.deleteAlbum)
+        button.setOnClickListener(){
+            deleteAlbum()
+        }
 
+        val albumName = intent.getStringExtra("albumName")
+        idAlbum= AlbumService.getIdFromAlbumName(albumName)
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = ImageAdapter(AlbumService.getAlbumFromAlbumName(albumName).photos)
@@ -37,5 +47,11 @@ class GalleryActivity: AppCompatActivity() {
             // specify an viewAdapter (see also next example)
             adapter = viewAdapter
         }
+    }
+
+    fun deleteAlbum(){
+        AlbumService.albumDelete(idAlbum)
+        Toast.makeText(this, "Album successfully deleted", Toast.LENGTH_SHORT).show()
+        finish()
     }
 }
