@@ -49,4 +49,16 @@ object PhotoService {
     fun populatePhotoForOtherAlbums(){
         
     }
+
+    fun deletePhoto(idPhoto : String){
+        db.collection("photo")
+            .whereEqualTo("photoPath", idPhoto)
+            .get().addOnSuccessListener {
+                documents ->
+                for (document in documents) { db.collection("photo").document(document.id).delete()
+                }
+            }
+        AlbumService.refreshUserAlbums()
+    }
+
 }
