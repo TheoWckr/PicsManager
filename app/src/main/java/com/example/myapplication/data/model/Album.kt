@@ -6,5 +6,5 @@ data class Album(
     val id: String,
     val name: String,
     var photos: Array<String>,
-    var readers: List<String>?
+    var isShared: Boolean?
 )

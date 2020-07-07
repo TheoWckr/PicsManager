@@ -37,6 +37,24 @@ class GalleryActivity: AppCompatActivity() {
         val albumName = intent.getStringExtra("albumName")
         idAlbum= AlbumService.getIdFromAlbumName(albumName)
 
+
+        var sharedButton = findViewById<Button>(R.id.share_button)
+        if(AlbumService.getAlbumFromAlbumName(albumName).isShared !== null){
+            if(AlbumService.getAlbumFromAlbumName(albumName).isShared!!) {
+                sharedButton.text = "Unshare"
+                sharedButton.setOnClickListener { unShare() }
+
+            }
+            else {
+                sharedButton.text = "Share"
+                sharedButton.setOnClickListener { share() }
+            }
+        } else {
+            sharedButton.text = "Share"
+            sharedButton.setOnClickListener { share() }
+        }
+
+
         viewManager = LinearLayoutManager(this)
         viewAdapter = ImageAdapter(AlbumService.getAlbumFromAlbumName(albumName).photos)
 
@@ -47,6 +65,24 @@ class GalleryActivity: AppCompatActivity() {
             // specify an viewAdapter (see also next example)
             adapter = viewAdapter
         }
+    }
+
+    fun share(){
+        AlbumService.shareAlbum(true, idAlbum)
+        Toast.makeText(this, "Album shared to other users ", Toast.LENGTH_SHORT).show()
+        var sharedButton = findViewById<Button>(R.id.share_button)
+        sharedButton.text = "Unshare"
+        sharedButton.setOnClickListener { unShare() }
+
+
+    }
+    fun unShare(){
+        AlbumService.shareAlbum(false, idAlbum)
+        Toast.makeText(this, "Album not longer shared", Toast.LENGTH_SHORT).show()
+        var sharedButton = findViewById<Button>(R.id.share_button)
+        sharedButton.text = "Share"
+        sharedButton.setOnClickListener { share() }
+
     }
 
     fun deleteAlbum(){
