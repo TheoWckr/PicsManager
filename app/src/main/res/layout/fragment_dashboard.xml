@@ -33,10 +33,12 @@
 
     <ListView
         android:id="@+id/list_album"
-        android:layout_width="261dp"
-        android:layout_height="524dp"
+        android:layout_width="260dp"
+        android:layout_height="175dp"
+        android:layout_marginTop="88dp"
         android:drawSelectorOnTop="false"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
@@ -47,4 +49,36 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My albums"
+        app:layout_constraintBottom_toTopOf="@+id/list_album"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:text="Public albums"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_album" />
+
+    <ListView
+        android:id="@+id/list_album_other"
+        android:layout_width="260dp"
+        android:layout_height="175dp"
+        android:layout_marginTop="16dp"
+        android:drawSelectorOnTop="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.029" />
 </androidx.constraintlayout.widget.ConstraintLayout>

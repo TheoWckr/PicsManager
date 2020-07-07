@@ -47,6 +47,24 @@ object PhotoService {
     }
 
     fun populatePhotoForOtherAlbums(){
+
+        var list = listOf<String>()
+        AlbumService.albumListOtherUsers.forEach({album -> list = list.plus(album.id)})
+
+        AlbumService.albumListOtherUsers
+        db.collection("photo")
+            .whereIn("album",list)
+            .get()
+            .addOnSuccessListener { documents ->
+                AlbumService.albumListOtherUsers.forEach{album -> album.photos.drop(album.photos.size)}
+                for (document in documents) {
+                    AlbumService.getOtherAlbumFromId(document.data["album"] as String).photos =
+                        AlbumService.getOtherAlbumFromId(document.data["album"] as String).photos.plus(document.data["photoPath"] as String)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(Constraints.TAG, "Error getting documents: ", exception)
+            }
         
     }
 

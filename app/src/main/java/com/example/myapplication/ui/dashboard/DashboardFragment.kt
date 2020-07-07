@@ -29,18 +29,9 @@ class DashboardFragment : Fragment() {
 
     ): View? {
         // use arrayadapter and define an array
-
-
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-//        val textView: TextView = root.findViewById(R.id.text_dashboard)
-//        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-////            textView.text = it
-////        })
-
-
-
         // access the listView from xml file
 
         val button = root.findViewById<Button>(R.id.createAlbum)
@@ -70,11 +61,15 @@ class DashboardFragment : Fragment() {
         }
 
         val arrayAdapter: ArrayAdapter<*>
+        val arrayAdapterOther: ArrayAdapter<*>
+
 //        val userAlbum = arrayOf("caca", "pipi")
 //        val userAlbum = arrayOf(
 //            userAlbums
 //        )
 
+
+        //ListView for User Album
         val mListView = view.findViewById<ListView>(R.id.list_album)
         arrayAdapter = this.context?.let {
             ArrayAdapter(
@@ -94,15 +89,32 @@ class DashboardFragment : Fragment() {
             startActivity(intent)
         }
 
-//        fun createAlbum(){
-//            // get input text
-//            val albumName= activity?.findViewById<TextInputEditText>(R.id.albumNameInput)
-//            // save on server
-//            if (albumName != null) {
-//                AlbumService.albumCreate(albumName.text.toString())
-////            println("on est passé par là")
-//            }
-//        }
+        //ListView forOther Albums
+
+        val userAlbumsOther = ArrayList<String>()
+        for (album in AlbumService.albumListOtherUsers) {
+            userAlbumsOther.add(album.name)
+        }
+
+        val mListViewOther = view.findViewById<ListView>(R.id.list_album_other)
+        arrayAdapterOther = this.context?.let {
+            ArrayAdapter(
+                it,
+                android.R.layout.simple_list_item_1, userAlbumsOther
+            )
+        }!!
+        if (mListViewOther != null) {
+            mListViewOther.adapter = arrayAdapterOther
+        }
+
+        mListViewOther.setOnItemClickListener { parent, view, position, id ->
+            val element =  parent.getItemAtPosition(position) as String // The item that was clicked
+            val intent = Intent(activity, GalleryActivity::class.java)
+            intent.putExtra("albumName", element)
+            intent.putExtra("isOther", "true")
+            startActivity(intent)
+        }
+
     }
 
 

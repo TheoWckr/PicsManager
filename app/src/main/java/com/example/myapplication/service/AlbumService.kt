@@ -49,8 +49,6 @@ object AlbumService {
                     var isShared = document.data["isShared"] as Boolean?
                     var album = Album(document.id, document.data["name"] as String, photos,isShared)
                     newAlbumList.add(album)
-
-                    document.data.keys
                 }
                 albumListOtherUsers.clear()
                 albumListOtherUsers.addAll(newAlbumList)
@@ -163,5 +161,16 @@ object AlbumService {
         return getAlbumFromAlbumName(albumName).id
     }
 
+    fun getOtherAlbumFromAlbumName(albumName : String): Album{
+        return albumListOtherUsers.filter { album -> album.name == albumName }.first()
+    }
+
+    fun getOtherAlbumFromId(albumId : String): Album{
+        return albumListOtherUsers.filter { album -> album.id == albumId }.first()
+    }
+
+    fun getOtherIdFromAlbumName(albumName : String): String{
+        return getOtherAlbumFromAlbumName(albumName).id
+    }
 
 }

@@ -3,8 +3,10 @@ package com.example.myapplication
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,28 +37,27 @@ class GalleryActivity: AppCompatActivity() {
         }
 
         val albumName = intent.getStringExtra("albumName")
-        idAlbum= AlbumService.getIdFromAlbumName(albumName)
+        val isOther = intent.getStringExtra("isOther")
+        if(isOther == null)
+            idAlbum= AlbumService.getIdFromAlbumName(albumName)
+        else
+            idAlbum= AlbumService.getOtherIdFromAlbumName(albumName)
 
 
-        var sharedButton = findViewById<Button>(R.id.share_button)
-        if(AlbumService.getAlbumFromAlbumName(albumName).isShared !== null){
-            if(AlbumService.getAlbumFromAlbumName(albumName).isShared!!) {
-                sharedButton.text = "Unshare"
-                sharedButton.setOnClickListener { unShare() }
+        findViewById<TextView>(R.id.textview_title_gallery).text = albumName
 
-            }
-            else {
-                sharedButton.text = "Share"
-                sharedButton.setOnClickListener { share() }
-            }
-        } else {
-            sharedButton.text = "Share"
-            sharedButton.setOnClickListener { share() }
-        }
+
+
+
 
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = ImageAdapter(AlbumService.getAlbumFromAlbumName(albumName).photos)
+
+        if(isOther != null){
+            viewAdapter = ImageAdapter(AlbumService.getOtherAlbumFromAlbumName(albumName).photos, false)
+        }
+            else
+            viewAdapter = ImageAdapter(AlbumService.getAlbumFromAlbumName(albumName).photos, true)
 
         recyclerView = findViewById<RecyclerView>(R.id.recyclerview_album).apply {
             setHasFixedSize(true)
@@ -65,6 +66,33 @@ class GalleryActivity: AppCompatActivity() {
             // specify an viewAdapter (see also next example)
             adapter = viewAdapter
         }
+
+        //Button handling
+        var sharedButton = findViewById<Button>(R.id.share_button)
+        var deleteButton = findViewById<Button>(R.id.deleteAlbum)
+
+
+        if(isOther != null){
+            sharedButton.setVisibility(View.GONE);
+            deleteButton.visibility = View.GONE
+        } else {
+            if(AlbumService.getAlbumFromAlbumName(albumName).isShared !== null){
+                if(AlbumService.getAlbumFromAlbumName(albumName).isShared!!) {
+                    sharedButton.text = "Unshare"
+                    sharedButton.setOnClickListener { unShare() }
+
+                }
+                else {
+                    sharedButton.text = "Share"
+                    sharedButton.setOnClickListener { share() }
+                }
+            } else {
+                sharedButton.text = "Share"
+                sharedButton.setOnClickListener { share() }
+            }
+
+        }
+
     }
 
     fun share(){

@@ -17,7 +17,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 
-class ImageAdapter(private val myDataset: Array<String>) :
+class ImageAdapter(private val myDataset: Array<String>, private val isEditable : Boolean) :
         RecyclerView.Adapter<ImageAdapter.MyViewHolder>() {
 
         // Provide a reference to the views for each data item
@@ -50,12 +50,13 @@ class ImageAdapter(private val myDataset: Array<String>) :
 // ImageView in your Activity
             holder.imageView.rotation = 90F
 
-
+        if(isEditable) {
             holder.imageView.setOnClickListener(View.OnClickListener {
                 val intent = Intent(it.context, EditPhotoActivity::class.java)
                 intent.putExtra("photoId", photoId)
                 it.context.startActivity(intent)
             })
+        }
 
 
 // Download directly from StorageReference using Glide
