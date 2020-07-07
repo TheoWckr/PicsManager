@@ -1,5 +1,6 @@
 package com.example.myapplication.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.myapplication.EditPhotoActivity
+import com.example.myapplication.GalleryActivity
 import com.example.myapplication.R
+import com.example.myapplication.SavePhotoActivity
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
@@ -48,7 +52,9 @@ class ImageAdapter(private val myDataset: Array<String>) :
 
 
             holder.imageView.setOnClickListener(View.OnClickListener {
-
+                val intent = Intent(it.context, EditPhotoActivity::class.java)
+                intent.putExtra("photoId", photoId)
+                it.context.startActivity(intent)
             })
 
 
