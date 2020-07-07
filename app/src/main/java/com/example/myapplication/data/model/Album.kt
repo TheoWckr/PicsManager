@@ -5,6 +5,6 @@ import java.util.ArrayList
 data class Album(
     val id: String,
     val name: String,
-    val photos: Array<String>,
-    val readers: List<String>?
+    var photos: Array<String>,
+    var readers: List<String>?
 )

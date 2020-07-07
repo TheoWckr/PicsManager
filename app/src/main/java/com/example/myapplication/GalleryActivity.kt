@@ -6,7 +6,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.myapplication.adapters.ImageAdapter
 import com.example.myapplication.service.AlbumService
 import com.google.firebase.ktx.Firebase
@@ -24,7 +23,7 @@ class GalleryActivity: AppCompatActivity() {
 
         val albumName = intent.getStringExtra("albumName")
 
-
+AlbumService.albumList
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = ImageAdapter(AlbumService.getAlbumFromAlbumName(albumName).photos)

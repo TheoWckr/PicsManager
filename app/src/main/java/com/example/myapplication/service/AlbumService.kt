@@ -43,10 +43,6 @@ object AlbumService {
                 for (document in documents) {
                     var photos = arrayOf<String>()
                     var readers = arrayListOf<String>()
-
-
-                   PhotoService.getPhotosFromAlbum(document.id, photos)
-
                     var album = Album(document.id, document.data["name"] as String, photos,readers)
                     newAlbumList.add(album)
 
@@ -55,6 +51,7 @@ object AlbumService {
                 }
                 receiver.clear()
                 receiver.addAll(newAlbumList)
+                PhotoService.populatePhoto()
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents: ", exception)
@@ -121,6 +118,10 @@ object AlbumService {
 
     fun getAlbumFromAlbumName(albumName : String): Album{
         return albumList.filter { album -> album.name == albumName }.first()
+    }
+
+    fun getAlbumFromId(albumId : String): Album{
+        return albumList.filter { album -> album.id == albumId }.first()
     }
 
     fun getIdFromAlbumName(albumName : String): String{

@@ -29,17 +29,18 @@ object PhotoService {
             }
     }
 
-    fun getPhotosFromAlbum(idAlbum : String, photoList : Array<String>){
+    fun populatePhoto(){
 
         db.collection("photo")
-            .whereEqualTo("album", idAlbum)
+            .whereEqualTo("owner", auth.currentUser?.uid)
             .get()
             .addOnSuccessListener { documents ->
                 val photoListe = arrayOf<String>()
+                AlbumService.albumList
                 for (document in documents) {
-                    photoListe.plus(document.data["photoPath"] as String)
+                    AlbumService.getAlbumFromId(document.data["album"] as String).photos =
+                    AlbumService.getAlbumFromId(document.data["album"] as String).photos.plus(document.data["photoPath"] as String)
                 }
-                //AlbumService.albumList.idAlbum
             }
             .addOnFailureListener { exception ->
                 Log.w(Constraints.TAG, "Error getting documents: ", exception)
