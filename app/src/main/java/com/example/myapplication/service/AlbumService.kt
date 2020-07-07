@@ -20,7 +20,8 @@ object AlbumService {
         fun albumCreate(name: String){
         val album = hashMapOf(
             "name" to name,
-            "owner" to auth.currentUser?.uid
+            "owner" to auth.currentUser?.uid,
+            "isShared" to false
         )
             db.collection("user").get()
             // Add a new document with a generated ID
@@ -44,8 +45,8 @@ object AlbumService {
                 var newAlbumList = ArrayList<Album>()
                 for (document in documents) {
                     var photos = arrayOf<String>()
-                    var readers = arrayListOf<String>()
-                    var album = Album(document.id, document.data["name"] as String, photos,readers)
+                    var isShared = document.data["isShared"] as Boolean?
+                    var album = Album(document.id, document.data["name"] as String, photos,isShared)
                     newAlbumList.add(album)
 
                     document.data.keys
@@ -105,6 +106,12 @@ object AlbumService {
     fun addPicture(idPicture: String, idAlbum: String ){
         val albumUpdated = db.collection("album").document(idAlbum)
         albumUpdated.update("photos", FieldValue.arrayUnion(idPicture))
+        refreshUserAlbums()
+
+    }
+    fun shareAlbum(toShare : Boolean, idAlbum: String){
+        val albumUpdated = db.collection("album").document(idAlbum)
+        albumUpdated.update("isShared", toShare )
         refreshUserAlbums()
 
     }
