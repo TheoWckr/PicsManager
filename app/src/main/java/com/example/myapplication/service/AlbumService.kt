@@ -13,9 +13,11 @@ import kotlin.collections.HashMap
 
 object AlbumService {
     var albumList = ArrayList<Album>()
+    var albumListOtherUsers = ArrayList<Album>()
 
      fun refreshUserAlbums() {
         getUserAlbums(albumList)
+         getOthersUserAlbum()
     }
         fun albumCreate(name: String){
         val album = hashMapOf(
@@ -34,6 +36,30 @@ object AlbumService {
                     Log.w(TAG, "Error adding document", e)
                 }
         }
+
+    fun getOthersUserAlbum(){
+        db.collection("album")
+            .whereEqualTo("isShared", true)
+            .get()
+            .addOnSuccessListener { documents ->
+
+                var newAlbumList = ArrayList<Album>()
+                for (document in documents) {
+                    var photos = arrayOf<String>()
+                    var isShared = document.data["isShared"] as Boolean?
+                    var album = Album(document.id, document.data["name"] as String, photos,isShared)
+                    newAlbumList.add(album)
+
+                    document.data.keys
+                }
+                albumListOtherUsers.clear()
+                albumListOtherUsers.addAll(newAlbumList)
+                PhotoService.populatePhotoForOtherAlbums()
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents: ", exception)
+            }
+    }
 
 
     fun getUserAlbums( receiver :ArrayList<Album>){

@@ -30,7 +30,6 @@ object PhotoService {
     }
 
     fun populatePhoto(){
-
         db.collection("photo")
             .whereEqualTo("owner", auth.currentUser?.uid)
             .get()
@@ -45,6 +44,9 @@ object PhotoService {
             .addOnFailureListener { exception ->
                 Log.w(Constraints.TAG, "Error getting documents: ", exception)
             }
+    }
 
+    fun populatePhotoForOtherAlbums(){
+        
     }
 }
