@@ -149,4 +149,9 @@ class MainActivity : AppCompatActivity() {
             currentPhotoPath = absolutePath
         }
     }
+
+    fun gallery(v : View){
+        val anotherIntent = Intent(this, GalleryActivity::class.java)
+        startActivity(anotherIntent)
+    }
 }
