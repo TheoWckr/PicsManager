@@ -77,7 +77,7 @@ object AlbumService {
     }
 
     fun albumDelete(idAlbum : String){
-        val albumToDelete = db.collection("album").document(idAlbum)
+        val albumToDelete = db.collection("album").document(idAlbum).delete()
         refreshUserAlbums()
     }
 
