@@ -8,8 +8,9 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.compressor.Compressor
+import com.example.myapplication.helpers.MetaI18n
+import com.example.myapplication.helpers.allI18n
 import com.example.myapplication.service.AlbumService
-import com.example.myapplication.service.AlbumService.getUserAlbums
 import com.example.myapplication.uploader.Uploader
 import com.google.android.material.textfield.TextInputEditText
 
@@ -17,44 +18,44 @@ import com.google.android.material.textfield.TextInputEditText
 class SavePhotoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     lateinit var photoPreview : Bitmap
     var choosenAlbum = ""
+    val i18n = allI18n.savePhoto
+
+    class I18n(
+   override val activityTitle :String ,
+    val pictureName  :String ,
+    val album  :String ,
+    val save  :String ,
+    val discard  :String,
+   val errorAlbum :String,
+   val errorNameEmpty :String,
+   val errorNameAlreadyTaken :String
+    ): MetaI18n
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save_photo)
+        //Getting image and populate view
         val path = intent.getStringExtra("imagePath")
         photoPreview = BitmapFactory.decodeFile(path)
-
         val imageView = findViewById<ImageView>(R.id.pictureResolve).apply {this.setImageBitmap(photoPreview)}
-        imageView.rotation = 90F 
+        imageView.rotation = 90F
 
+        //Discard button
         var discardButton = findViewById<Button>(R.id.discard_button)
-
         discardButton.setOnClickListener {
-            val anotherIntent = Intent(this, MainActivity::class.java)
-            startActivity(anotherIntent)
+            discard()
         }
-        // Get the Intent that started this activity and extract the string
-        //val photo_save = intent.getStringExtra(EXTRA_MESSAGE)
 
-        // Capture the layout's TextView and set the string as its text
-        //val imageView = findViewById<ImageView>(R.id.pictureResolve).apply {
-//            text = message
-//        }
+        //Putting albums in the spinner
         val spinner: Spinner = findViewById(R.id.album_spinner)
-// Create an ArrayAdapter using the st, AdapterView.OnItemSelectedListenerring array and a default spinner layout
-        val usersList = ArrayList<String>()
-
-       // var receiver = HashMap<String,Any>()
-        //getUserAlbums(receiver, usersList)
-
-            for (album in AlbumService.albumList) {
-                    usersList.add(album.name )
-
+        val albumStringList = ArrayList<String>()
+             for (album in AlbumService.albumList) {
+                 albumStringList.add(album.name)
+             }
             val  catAdapter =
-                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, usersList)
+                ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, albumStringList)
             spinner.adapter = catAdapter
-        }
-
-
+        spinner.onItemSelectedListener = this
 
 
     }
@@ -65,14 +66,22 @@ class SavePhotoActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     fun save (v: View){
-        val nameField = findViewById<TextInputEditText>(R.id.name_field)
-        val nameAlbum = findViewById<Spinner>(R.id.album_spinner)
+        val nameField = findViewById<TextInputEditText>(R.id.name_field).text.toString()
+
+        if(choosenAlbum.length === 0) {
+            Toast.makeText(this, i18n.errorAlbum, Toast.LENGTH_SHORT).show()
+            return
+        }
+        if(nameField.length === 0){
+            Toast.makeText(this, i18n.errorNameEmpty, Toast.LENGTH_SHORT  ).show()
+            return
+        }
         if (photoPreview !== null )
-          Uploader.upload(Compressor.divideSize(photoPreview, 4), nameField.text.toString(), ::validation, choosenAlbum )
+          Uploader.upload(Compressor.divideSize(photoPreview,5), nameField, ::validation, AlbumService.getIdFromAlbumName(choosenAlbum) )
         }
 
 
-    fun validation(){
+    private fun validation(){
         println("Validation")
         Toast.makeText(this, "Image saved", Toast.LENGTH_SHORT).show()
         val anotherIntent = Intent(this, MainActivity::class.java)

@@ -23,7 +23,7 @@ object Uploader {
             // Handle unsuccessful uploads
         }.addOnSuccessListener {
             createPhoto(spaceRef.path, name, album)
-            validation
+            validation()
         }
     }
 }

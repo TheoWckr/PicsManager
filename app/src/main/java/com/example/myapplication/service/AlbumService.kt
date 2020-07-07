@@ -114,4 +114,14 @@ object AlbumService {
         newAlbumUpdated.update("photos", FieldValue.arrayUnion(idPicture))
         refreshUserAlbums()
     }
+
+    fun getAlbumFromAlbumName(albumName : String): Album{
+        return albumList.filter { album -> album.name === albumName }.first()
+    }
+
+    fun getIdFromAlbumName(albumName : String): String{
+        return getAlbumFromAlbumName(albumName).id
+    }
+
+
 }

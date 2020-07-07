@@ -3,6 +3,7 @@ package com.example.myapplication.helpers.languages
 import com.example.myapplication.LoginActivity
 import com.example.myapplication.MainActivity
 import com.example.myapplication.RegisterActivity
+import com.example.myapplication.SavePhotoActivity
 import com.example.myapplication.helpers.AllI18n
 import com.example.myapplication.helpers.AppLanguage
 
@@ -34,5 +35,15 @@ val frI18n = AllI18n(
     main = MainActivity.I18n(
         activityTitle = "Pics Manager",
         takePicture = "Nouvelle photo"
+    ),
+    savePhoto = SavePhotoActivity.I18n(
+        activityTitle = "Save photo",
+        pictureName = "Name your picture",
+        album = "Album",
+        save = "Save",
+        discard = "Discard",
+        errorAlbum = "Please select an album",
+        errorNameEmpty = "Please enter a name",
+        errorNameAlreadyTaken = "Name already taken"
     )
 )
