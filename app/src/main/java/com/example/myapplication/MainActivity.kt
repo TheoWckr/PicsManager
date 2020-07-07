@@ -152,6 +152,7 @@ class MainActivity : AppCompatActivity() {
 
     fun gallery(v : View){
         val anotherIntent = Intent(this, GalleryActivity::class.java)
+        anotherIntent.putExtra("albumName", "new album")
         startActivity(anotherIntent)
     }
 }

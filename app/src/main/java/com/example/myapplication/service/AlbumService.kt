@@ -2,11 +2,12 @@ package com.example.myapplication.service
 
 import android.util.Log
 import androidx.constraintlayout.widget.Constraints.TAG
-import androidx.lifecycle.LiveData
+
 import com.example.myapplication.data.model.Album
 import com.example.myapplication.helpers.auth
 import com.example.myapplication.helpers.db
 import com.google.firebase.firestore.FieldValue
+import kotlinx.coroutines.android.awaitFrame
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -40,8 +41,11 @@ object AlbumService {
 
                 var newAlbumList = ArrayList<Album>()
                 for (document in documents) {
-                    var photos = arrayListOf<String>()
+                    var photos = arrayOf<String>()
                     var readers = arrayListOf<String>()
+
+
+                   PhotoService.getPhotosFromAlbum(document.id, photos)
 
                     var album = Album(document.id, document.data["name"] as String, photos,readers)
                     newAlbumList.add(album)
@@ -116,7 +120,7 @@ object AlbumService {
     }
 
     fun getAlbumFromAlbumName(albumName : String): Album{
-        return albumList.filter { album -> album.name === albumName }.first()
+        return albumList.filter { album -> album.name == albumName }.first()
     }
 
     fun getIdFromAlbumName(albumName : String): String{

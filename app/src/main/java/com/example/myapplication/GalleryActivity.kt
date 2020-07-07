@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.adapters.ImageAdapter
+import com.example.myapplication.service.AlbumService
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
@@ -21,30 +22,25 @@ class GalleryActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gallery)
 
-        val dataSet = arrayOf("Bobby", "Bobbo", "Booba")
-        //val albumId = intent.getStringExtra("albumId")
+        val albumName = intent.getStringExtra("albumName")
+
+
 
         viewManager = LinearLayoutManager(this)
-        viewAdapter = ImageAdapter(dataSet)
+        viewAdapter = ImageAdapter(AlbumService.getAlbumFromAlbumName(albumName).photos)
 
         recyclerView = findViewById<RecyclerView>(R.id.recyclerview_album).apply {
-            // use this setting to improve performance if you know that changes
-            // in content do not change the layout size of the RecyclerView
             setHasFixedSize(true)
-
-
             // use a linear layout manager
             layoutManager = viewManager
-
             // specify an viewAdapter (see also next example)
             adapter = viewAdapter
-
         }
 
 /*
 // Reference to an image file in Cloud Storage
         val storageReference = Firebase.storage.reference
-           val pictureRef=  storageReference.child("9iWK6LwOOmOYU3bKC4DQeU8LPCH3 /Johnny")
+           val pictureRef=  storageReference.child("9iWK6LwOOmOYU3bKC4DQeU8LPCH3/Johnny")
 // ImageView in your Activity
         val imageView = findViewById<ImageView>(R.id.imageView)
 
