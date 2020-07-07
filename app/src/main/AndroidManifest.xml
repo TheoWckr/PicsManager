@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".GalleryActivity"></activity>
+        <activity android:name=".EditPhotoActivity"></activity>
 
         <activity android:name=".LoginActivity">
             <intent-filter>

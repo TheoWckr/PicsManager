@@ -22,6 +22,7 @@ object AlbumService {
             "name" to name,
             "owner" to auth.currentUser?.uid
         )
+            db.collection("user").get()
             // Add a new document with a generated ID
             db.collection("album")
                 .add(album)
@@ -32,6 +33,7 @@ object AlbumService {
                     Log.w(TAG, "Error adding document", e)
                 }
         }
+
 
     fun getUserAlbums( receiver :ArrayList<Album>){
         db.collection("album")
