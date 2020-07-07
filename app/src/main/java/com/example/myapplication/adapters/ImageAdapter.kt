@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 
 class ImageAdapter(private val myDataset: Array<String>) :
@@ -35,15 +36,17 @@ class ImageAdapter(private val myDataset: Array<String>) :
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
             val photoId = myDataset[position]
 
+            val gsReference: StorageReference =
+                com.example.myapplication.helpers.storage.getReferenceFromUrl("gs://picts-manager.appspot.com"+ photoId)
 
             val storageReference = Firebase.storage.reference
-            val pictureRef=  storageReference.child("9iWK6LwOOmOYU3bKC4DQeU8LPCH3 /Johnny")
+            val pictureRef=  storageReference.child(photoId.removePrefix("/"))
 // ImageView in your Activity
 
 // Download directly from StorageReference using Glide
 // (See MyAppGlideModule for Loader registration)
             Glide.with(holder.imageView.context /* context */)
-                .load("https://firebasestorage.googleapis.com/v0/b/picts-manager.appspot.com/o/9iWK6LwOOmOYU3bKC4DQeU8LPCH3%20%2FJohnny?alt=media&token=3ea74873-f04e-46fd-8b0e-6e1a8f76384a")
+                .load(gsReference)
                 .into(holder.imageView )
             // - get element from your dataset at this position
             // - replace the contents of the view with that element

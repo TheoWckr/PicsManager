@@ -23,7 +23,6 @@ class GalleryActivity: AppCompatActivity() {
 
         val albumName = intent.getStringExtra("albumName")
 
-AlbumService.albumList
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = ImageAdapter(AlbumService.getAlbumFromAlbumName(albumName).photos)

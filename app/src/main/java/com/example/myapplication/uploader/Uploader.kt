@@ -13,7 +13,7 @@ object Uploader {
 
     fun upload(bitmap: Bitmap, name: String, validation: KFunction0<Unit>, album : String){
         //Creation d'un nom pour le storage
-        var spaceRef = storageRef.child(auth.uid+" /" + name)
+        var spaceRef = storageRef.child(auth.uid+"/" + name+".jpg")
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
 
