@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Photo</string>
+    <string name="title_dashboard">Albums</string>
+    <string name="title_notifications">Logout</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
